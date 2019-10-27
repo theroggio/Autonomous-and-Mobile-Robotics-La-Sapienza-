@@ -62,4 +62,181 @@ To check if we need this alpha we must compute the maximum value of both **v** a
 
 Having the 'max values' we can see if they are over the bounds or not, if one of both of them are over the soglia we use alpha = 1/m where m is the biggest ratio among { vmax / v_bound , wmax / w_bound }.
 
+## Problem 3 
 
+TODO
+
+# Midterm 2016/2017
+
+## Problem 1
+
+### Augmented Configuration Space
+
+We can start from the basis: a unicycle without the wheel angle has three coordinates: one for x-position of its center, one for y-position and one for the orientation.
+
+To consider also the wheel angle we must include it in the state, which become a 4 element vector. 
+
+The configuration space, of dimension 4, is the cartesian product of (R\*R) for the position of the center, ( SO(2) ) for the orientation and ( SO(2) ) for the orientation of the wheel. 
+
+### Kinematic Augmented Model
+
+Starting from the kinematic model of the unicycle we can try to augment it. We just need to consider this information connecting the former input **v** to a new input related to the wheel's orientation.
+
+<img src="https://latex.codecogs.com/gif.latex?v&space;=&space;w_{wheel}&space;R" title="v = w_{wheel} R" />
+
+Replacing this information inside the model and adding the information about the phi angle we have
+
+<img src="https://latex.codecogs.com/gif.latex?\left\{\begin{matrix}&space;\dot{x}&space;=&space;w_{\phi}&space;R&space;cos(\theta)&space;\\&space;\dot{y}&space;=&space;w_{\phi}&space;R&space;sen(\theta)&space;\\&space;\dot{\theta}&space;=&space;w&space;\\&space;\dot{\phi}&space;=&space;w_{\phi}&space;\end{matrix}\right." title="\left\{\begin{matrix} \dot{x} = w_{\phi} R cos(\theta) \\ \dot{y} = w_{\phi} R sen(\theta) \\ \dot{\theta} = w \\ \dot{\phi} = w_{\phi} \end{matrix}\right." />
+
+### Controllability
+
+From the kinematic model above we have already two vector of the vector field:
+<img src="https://latex.codecogs.com/gif.latex?\\&space;g_1&space;=&space;\begin{pmatrix}&space;R&space;cos(\theta)&space;\\&space;R&space;sen(\theta)&space;\\&space;0&space;\\&space;1&space;\end{pmatrix}&space;\hspace{0.5cm}&space;g_2&space;=&space;\begin{pmatrix}&space;0&space;\\&space;0&space;\\&space;1&space;\\&space;0&space;\end{pmatrix}" title="\\ g_1 = \begin{pmatrix} R cos(\theta) \\ R sen(\theta) \\ 0 \\ 1 \end{pmatrix} \hspace{0.5cm} g_2 = \begin{pmatrix} 0 \\ 0 \\ 1 \\ 0 \end{pmatrix}" />
+
+To prove controllability we need to find other two vectors (because configuration space has dimension 4) using the Lie Brackets.
+<img src="https://latex.codecogs.com/gif.latex?\\&space;\begin{bmatrix}&space;g_1,g_2&space;\end{bmatrix}&space;=&space;\begin{pmatrix}&space;R&space;sen(\theta)&space;\\&space;-&space;R&space;cos(\theta)&space;\\&space;0&space;\\&space;0&space;\end{pmatrix}&space;=&space;g_3&space;\\&space;\begin{bmatrix}&space;g_1,g_3&space;\end{bmatrix}&space;=&space;\begin{pmatrix}&space;0&space;\\&space;0&space;\\&space;0&space;\\&space;0&space;\end{pmatrix}&space;\\&space;\begin{bmatrix}&space;g_2,g_3&space;\end{bmatrix}&space;=&space;\begin{pmatrix}&space;R&space;cos(\theta)&space;\\&space;R&space;sen(\theta)&space;\\&space;0&space;\\&space;0&space;\end{pmatrix}&space;=&space;g_4" title="\\ \begin{bmatrix} g_1,g_2 \end{bmatrix} = \begin{pmatrix} R sen(\theta) \\ - R cos(\theta) \\ 0 \\ 0 \end{pmatrix} = g_3 \\ \begin{bmatrix} g_1,g_3 \end{bmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \\ 0 \end{pmatrix} \\ \begin{bmatrix} g_2,g_3 \end{bmatrix} = \begin{pmatrix} R cos(\theta) \\ R sen(\theta) \\ 0 \\ 0 \end{pmatrix} = g_4" />
+
+We can easily compute the rank of the matrix composed by all the g vectors, it's 4, because the determinant of the matrix is -R\*R. So the system is controllable.
+
+### Maneuver between two configurations
+
+A possible maneuver between any initial configuration and any final one can be augmented from the maneuver of the uncycle. 
+
+- we orientate the robot in the direction of the center point of the final configuration
+- we move the robot on this direction until the current center is the same of the final one
+- we orientate the robot direction as the final desired orientation
+
+Now we just need to have the wheel orientation as the one we desire, we just need to notice that to change it we must move the robot. Knowing of how much we need to change the wheel orientation we can compute the radius of the circle with that length as the circonference, than
+
+- we move the robot on a circle, with radius diff\*pi/2, at the end we'll be in the same position, with same orientation but desired wheel angle
+
+## Problem 2
+
+We have the initial and final configuration, we can use more than one way to compute the planning. Let's try with the polynomial interpolation, using the flat outputs of the (2,3) chain form which are z1 and z3.
+
+The number of boundary conditions we have is 6: 2 for the initial values of FO, 2 for their final values and 2 for the initial and final value of z2, which depends on their derivatives. 
+
+So we need 6 parameters, a good way is using a first order polynomial and a third order polynomial respectively for z1 and z3. 
+
+Solving with the conditions we get 
+
+<img src="https://latex.codecogs.com/gif.latex?\\&space;z_1&space;(s)&space;=&space;s&space;\\&space;z_3&space;(s)&space;=&space;-s^3&space;&plus;&space;2s^2&space;\\&space;\\&space;z_2(s)&space;=\frac{z_3'(s)}{z_1'(s)}&space;=&space;-3s^2&space;&plus;4s" title="\\ z_1 (s) = s \\ z_3 (s) = -s^3 + 2s^2 \\ \\ z_2(s) =\frac{z_3'(s)}{z_1'(s)} = -3s^2 +4s" />
+
+## Problem 3
+
+### Feedback Control Law of x
+
+If the y coordinate is not of interest we can just take it out for now and try with an input-output linearization. The x is our desired output and we already know from the kinematic model that 
+
+<img src="https://latex.codecogs.com/gif.latex?\dot{x}&space;=&space;v&space;cos(\theta)" title="\dot{x} = v cos(\theta)" />
+
+So it depends only on one input **v** in a linear way, we can just invert the formula (it's a 1-by-1 matrix basically) to find the **T** transformation.
+
+<img src="https://latex.codecogs.com/gif.latex?\\T&space;=&space;cos(\theta)&space;\\&space;v&space;=&space;T^{-1}&space;u&space;=&space;\frac{u}{cos(\theta)}&space;\\&space;\dot{x}&space;=&space;u" title="\\T = cos(\theta) \\ v = T^{-1} u = \frac{u}{cos(\theta)} \\ \dot{x} = u" />
+
+This means our feedback control to drive the robot from its position to the deisred x is below, using T we can also retrieve the feedback for the v input.
+
+<img src="https://latex.codecogs.com/gif.latex?\\&space;u&space;=&space;k_1&space;(x_d&space;-&space;x)&space;\\&space;v&space;=&space;\frac{k_1}{cos(\theta)}&space;(x_d&space;-&space;x)" title="\\ u = k_1 (x_d - x) \\ v = \frac{k_1}{cos(\theta)} (x_d - x)" />
+
+We still need to avoid the collision with the walls, but we still have a second input we're not using for controlling the position on x axis. We can add a second control over the **w** input to keep the orientation fixed so that the robot follow a straight path without colliding with the walls, the law would be just a proportional one.
+
+### Localization System
+
+TODO 
+
+# Midterm 2015/2016
+
+## Problem 1
+
+### Kinematic Model for the Cycab with rear-wheel drive
+
+First of all, the Cycab is a car-like vehicle with an additional possibility to orient the rear wheels, so its configuration can be expressed as (x,y) position of the middle point of the rear wheel axis, orientation of the chassis, orientation of the rear wheels and orientation of the front wheels. This is a 5 dimensional vector linked to a configuration space like R*\R x (SO(2))^3.
+
+We can derive the model from its constraints that are the same of the car-like robot, just we need to pay attention to the angles of the constraint which are always vehicle orientation + wheel orientation, for both front and rear wheels.
+
+<img src="https://latex.codecogs.com/gif.latex?\left\{\begin{matrix}&space;\dot{x}&space;sin(\theta&space;&plus;&space;\gamma)&space;-&space;\dot{y}&space;cos(\theta&space;&plus;&space;\gamma)&space;=&space;0&space;\\&space;\dot{x_f}&space;sin(\theta&space;&plus;&space;\phi)&space;-&space;\dot{y_f}&space;cos(\theta&space;&plus;&space;\phi)&space;=&space;0&space;\end{matrix}\right." title="\left\{\begin{matrix} \dot{x} sin(\theta + \gamma) - \dot{y} cos(\theta + \gamma) = 0 \\ \dot{x_f} cos(\theta + \phi) - \dot{y_f} sin(\theta + \phi) = 0 \end{matrix}\right." />
+
+Now we need to express the middle point of the front wheel axis as dependent on the other measures we have, we do not need other two coordinates for that point.
+
+<img src="https://latex.codecogs.com/gif.latex?\\&space;\begin{pmatrix}&space;x_f&space;\\&space;y_f&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;x&space;&plus;&space;lcos(\theta)&space;\\&space;y&space;&plus;&space;lsin(\theta)&space;\end{pmatrix}&space;\\&space;\begin{pmatrix}&space;\dot{x_f}&space;\\&space;\dot{y_f}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;\dot{x}&space;-&space;l\dot{\theta}sin(\theta)&space;\\&space;\dot{y}&space;&plus;&space;l\dot{\theta}cos(\theta)&space;\end{pmatrix}" title="\\ \begin{pmatrix} x_f \\ y_f \end{pmatrix} = \begin{pmatrix} x + lcos(\theta) \\ y + lsin(\theta) \end{pmatrix} \\ \begin{pmatrix} \dot{x_f} \\ \dot{y_f} \end{pmatrix} = \begin{pmatrix} \dot{x} - l\dot{\theta}sin(\theta) \\ \dot{y} + l\dot{\theta}cos(\theta) \end{pmatrix}" />
+
+Plugging this in the previous constraints we obtain our kinematic model:
+
+<img src="https://latex.codecogs.com/gif.latex?\left\{\begin{matrix}&space;\dot{x}&space;sin(\theta&space;&plus;&space;\gamma)&space;-&space;\dot{y}cos(\theta&space;&plus;&space;\gamma)&space;=&space;0&space;\\&space;\dot{x}&space;sin(\theta&space;&plus;&space;\phi)&space;-&space;\dot{y}&space;cos(\theta&space;&plus;&space;\phi)&space;-&space;l&space;\dot{\theta}&space;cos(\phi)&space;=&space;0&space;\end{matrix}\right." title="\left\{\begin{matrix} \dot{x} sin(\theta + \gamma) - \dot{y}cos(\theta + \gamma) = 0 \\ \dot{x} sin(\theta + \phi) - \dot{y} cos(\theta + \phi) - l \dot{\theta} cos(\phi) = 0 \end{matrix}\right." />
+
+That now can be written in Pfaffian form depending on the generalized velocities of x y theta phi gamma. We need to find the vector field to write the kinematic model, first of all we already see the last two columns are all zeros so we already have two vector from there; the first vector can be chosen augmenting the vector for the unicycle with cos and sin of the main angle (theta + gamma) and solving for the third coordinate. 
+
+We get
+
+<img src="https://latex.codecogs.com/gif.latex?\\&space;g_1&space;=&space;\begin{pmatrix}&space;cos(\theta&space;&plus;&space;\gamma)&space;\\&space;sin(\theta&space;&plus;&space;\gamma)&space;\\&space;\frac{sin(\phi&space;-&space;\gamma)}{l&space;cos(\phi)}&space;\\&space;0&space;\\&space;0&space;\end{pmatrix}&space;\hspace{0.5cm}&space;g_2&space;=&space;\begin{pmatrix}&space;0\\&space;0&space;\\&space;0&space;\\&space;1&space;\\&space;0&space;\end{pmatrix}&space;\hspace{0.5cm}&space;g_2&space;=&space;\begin{pmatrix}&space;0\\&space;0&space;\\&space;0&space;\\&space;0&space;\\&space;1&space;\end{pmatrix}" title="\\ g_1 = \begin{pmatrix} cos(\theta + \gamma) \\ sin(\theta + \gamma) \\ \frac{sin(\phi - \gamma)}{l cos(\phi)} \\ 0 \\ 0 \end{pmatrix} \hspace{0.5cm} g_2 = \begin{pmatrix} 0\\ 0 \\ 0 \\ 1 \\ 0 \end{pmatrix} \hspace{0.5cm} g_2 = \begin{pmatrix} 0\\ 0 \\ 0 \\ 0 \\ 1 \end{pmatrix}" />
+
+So the final model can be written using as inputs v, steering of the rear and of the front wheels, as 
+
+<img src="https://latex.codecogs.com/gif.latex?\\&space;\dot{x}&space;=&space;v&space;cos(\theta&space;&plus;&space;\gamma)&space;\\&space;\dot{y}&space;=&space;v&space;sin(\theta&space;&plus;&space;\gamma)&space;\\&space;\dot{\theta}&space;=&space;v&space;\frac{sin(\phi&space;-&space;\gamma)}{lcos(\phi)}&space;\\&space;\dot{\gamma}&space;=&space;w_{r}&space;\\&space;\dot{\phi}&space;=&space;w_{f}" title="\\ \dot{x} = v cos(\theta + \gamma) \\ \dot{y} = v sin(\theta + \gamma) \\ \dot{\theta} = v \frac{sin(\phi - \gamma)}{lcos(\phi)} \\ \dot{\gamma} = w_{r} \\ \dot{\phi} = w_{f}" />
+
+### Prove the controllability of the system
+
+We can see this as the augmentation of the car-like robot, because of the heavy computations of the Lie Bracket in a 5 dimensional space we can try to find the maneuver which brings the robot from any initial configuration to any final configuration. 
+
+- we set the rear wheel orientation to zero using only the wr input
+- we bring the robot from this configuration to the final configuration for the first four coordinates, this is possible because the car like robot is controllable, we're not using the wr input now
+- we use only the wr input to change the rear wheel orientation to match the desired one
+
+## Problem 2
+
+We want to control only the chassis orientation, from the former exercise we can see that we have a realtionship between the derivative and just the **v** input, which can be easily inverted. 
+
+<img src="https://latex.codecogs.com/gif.latex?\\&space;T&space;=&space;\frac{sin(\phi&space;-&space;\gamma)}{l&space;cos(\phi)}&space;\\&space;T^{-1}&space;=&space;\frac{l&space;cos(\phi)}{sin(\phi&space;-&space;\gamma)}&space;\\&space;v&space;=&space;T^{-1}u&space;\\&space;\dot{\theta}&space;=&space;u" title="\\ T = \frac{sin(\phi - \gamma)}{l cos(\phi)} \\ T^{-1} = \frac{l cos(\phi)}{sin(\phi - \gamma)} \\ v = T^{-1}u \\ \dot{\theta} = u" />
+
+So the control law is now trivial 
+
+<img src="https://latex.codecogs.com/gif.latex?\\&space;u&space;=&space;k_v&space;(\theta_d&space;-&space;\theta)&space;&plus;&space;\dot{\theta_d}" title="\\ u = k_v (\theta_d - \theta) + \dot{\theta_d}" />
+
+What about its problems? We can see that our **T** has some problems when the phi and gamma angle are equal to each other, so when the rear and front wheels have the same orientation. We have any way two other inputs we're not using for the control that we can set to avoid this singularity. 
+
+If the initial configuration is not a singular one we can just set both of them to zero, if the initial configuration is singular we need to move outside of it (epslon burst of one of the wheels velocity) and when they are different we can go back to the previous case.
+
+## Problem 3
+
+TODO
+
+# Class Test 2014/2015
+
+## Problem 1
+
+### Kinematic Model 
+
+Starting from the unicycle model and knowing the input trasformations we can write the kinematic model of the differential drive robot in no time. 
+
+<img src="https://latex.codecogs.com/gif.latex?\begin{Bmatrix}&space;\dot{x}&space;=&space;\frac{R}{2}&space;(w_R&space;&plus;&space;w_L)&space;cos(\theta)&space;\\&space;\dot{y}&space;=&space;\frac{R}{2}&space;(w_R&space;&plus;&space;w_L)&space;sin(\theta)&space;\\&space;\dot{\theta}&space;=&space;\frac{R}{d}&space;(w_R&space;-&space;w_L)&space;\end{Bmatrix}" title="\begin{Bmatrix} \dot{x} = \frac{R}{2} (w_R + w_L) cos(\theta) \\ \dot{y} = \frac{R}{2} (w_R + w_L) sin(\theta) \\ \dot{\theta} = \frac{R}{d} (w_R - w_L) \end{Bmatrix}" />
+
+### Controllability
+
+From the above model we can find the firsts vector of the vector field, then we need to compute the third one using the Lie Bracket.
+
+<img src="https://latex.codecogs.com/gif.latex?\\&space;g_1&space;=&space;\begin{pmatrix}&space;\frac{R}{2}&space;cos(\theta)&space;\\&space;\frac{R}{2}&space;sin(\theta)&space;\\&space;\frac{R}{d}&space;\end{pmatrix}&space;\hspace{0.5cm}&space;g_2&space;=&space;\begin{pmatrix}&space;\frac{R}{2}&space;cos(\theta)&space;\\&space;\frac{R}{2}&space;sin(\theta)&space;\\&space;-\frac{R}{d}&space;\end{pmatrix}" title="\\ g_1 = \begin{pmatrix} \frac{R}{2} cos(\theta) \\ \frac{R}{2} sin(\theta) \\ \frac{R}{d} \end{pmatrix} \hspace{0.5cm} g_2 = \begin{pmatrix} \frac{R}{2} cos(\theta) \\ \frac{R}{2} sin(\theta) \\ -\frac{R}{d} \end{pmatrix}" />
+
+<img src="https://latex.codecogs.com/gif.latex?\\&space;\begin{bmatrix}&space;g_1,g_2&space;\end{bmatrix}&space;=&space;\begin{bmatrix}&space;0&space;&&space;0&space;&&space;-\frac{R}{2}&space;sin(\theta)&space;\\&space;0&space;&&space;0&space;&&space;\frac{R}{2}&space;cos(\theta)&space;\\&space;0&space;&&space;0&space;&&space;0&space;\end{bmatrix}&space;\begin{pmatrix}&space;\frac{R}{2}&space;cos(\theta)&space;\\&space;\frac{R}{2}&space;sin(\theta)&space;\\&space;\frac{R}{d}&space;\end{pmatrix}&space;-&space;\begin{bmatrix}&space;0&space;&&space;0&space;&&space;-\frac{R}{2}&space;sin(\theta)&space;\\&space;0&space;&&space;0&space;&&space;\frac{R}{2}&space;cos(\theta)&space;\\&space;0&space;&&space;0&space;&&space;0&space;\end{bmatrix}&space;\begin{pmatrix}&space;\frac{R}{2}&space;cos(\theta)&space;\\&space;\frac{R}{2}&space;sin(\theta)&space;\\&space;-\frac{R}{d}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;-\frac{R^2}{d}sin(\theta)&space;\\&space;\frac{R^2}{d}cos(\theta)&space;\\&space;0&space;\end{pmatrix}&space;=&space;g_3" title="\\ \begin{bmatrix} g_1,g_2 \end{bmatrix} = \begin{bmatrix} 0 & 0 & -\frac{R}{2} sin(\theta) \\ 0 & 0 & \frac{R}{2} cos(\theta) \\ 0 & 0 & 0 \end{bmatrix} \begin{pmatrix} \frac{R}{2} cos(\theta) \\ \frac{R}{2} sin(\theta) \\ \frac{R}{d} \end{pmatrix} - \begin{bmatrix} 0 & 0 & -\frac{R}{2} sin(\theta) \\ 0 & 0 & \frac{R}{2} cos(\theta) \\ 0 & 0 & 0 \end{bmatrix} \begin{pmatrix} \frac{R}{2} cos(\theta) \\ \frac{R}{2} sin(\theta) \\ -\frac{R}{d} \end{pmatrix} = \begin{pmatrix} -\frac{R^2}{d}sin(\theta) \\ \frac{R^2}{d}cos(\theta) \\ 0 \end{pmatrix} = g_3" />
+
+It's easy to see they're independent from each other and the matrix they form has determinant R^4 / d^2.
+
+### Sketch of the LB maneuver
+
+A LB maneuver uses 2\*#input step to see the infinitesimal error committed by the model during the motion. IN this case our inputs are the right and left angular velocity for the wheels.
+
+This means tha during the first step the robot's wheel A will move along an arc of circumference (of radius d, center the position of wheel B). 
+During the second step the wheel B will do the same. At the end we will be in front of the previous position titled in the direction of the B wheel. 
+During the third step we'll do the contrary of the first one, so we'll go back with another arc of circumference; same for the fourth step.
+
+Because of the 'arc' movement of the first wheel is influenced by the B position, we'll end up basically a little more on the B direction wrt to the initial position.
+
+## Problem 2
+
+TODO
+
+## Problem 3
+
+TODO
+
+
+ 
