@@ -12,7 +12,7 @@ The final vector for the genralized coordinates is
 
 The configuration space is 
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=\mathit{C}&space;=&space;\mathbb{R}^2&space;\times&space;SO(2)&space;\times&space;(SO(3))^6" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\mathit{C}&space;=&space;\mathbb{R}^2&space;\times&space;SO(2)&space;\times&space;(SO(3))^6" title="\mathit{C} = \mathbb{R}^2 \times SO(2) \times (SO(3))^6" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=\mathit{C}&space;=&space;\mathbb{R}^2&space;\times&space;SO(2)&space;\times&space;(SO(3))^6" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\mathit{C}&space;=&space;\mathbb{R}^2&space;\times&space;SO(2)&space;\times&space;(SO(2))^6" title="\mathit{C} = \mathbb{R}^2 \times SO(2) \times (SO(2))^6" /></a>
 
 Where the first two compoenents are the ones of the unicycle (which moves and rotates in the 2D space) the others are from the manipulator in the 3D space. 
 
