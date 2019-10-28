@@ -291,5 +291,60 @@ The last link can be positioned and oriented so it has C dimension = 6 and it's 
 
 TODO
 
+# Class Test 2012/2013
+
+## Problem 1
+
+### Configuration vector
+
+Without considering the robotic arm we know the unicycle needs three coordinates: (x,y) for the position of the center and (theta) for its orientation on the plane. The kinematic arm has one degree of freedom which depends on the angle of rotation of the arm with respect to the orientation of the chassis, this adds the fourth coordinate (phi).
+
+### Kinematic Model
+
+We can augment the model of the unicycle considering that the robotic arm needs to be commanded on its own.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\left\{\begin{matrix}&space;\dot{x}&space;=&space;v&space;cos(\theta)&space;\\&space;\dot{y}&space;=&space;v&space;sin(\theta)&space;\\&space;\dot{\theta}&space;=&space;w&space;\\&space;\dot{\phi}&space;=&space;u&space;\end{matrix}\right." target="_blank"><img src="https://latex.codecogs.com/gif.latex?\left\{\begin{matrix}&space;\dot{x}&space;=&space;v&space;cos(\theta)&space;\\&space;\dot{y}&space;=&space;v&space;sin(\theta)&space;\\&space;\dot{\theta}&space;=&space;w&space;\\&space;\dot{\phi}&space;=&space;u&space;\end{matrix}\right." title="\left\{\begin{matrix} \dot{x} = v cos(\theta) \\ \dot{y} = v sin(\theta) \\ \dot{\theta} = w \\ \dot{\phi} = u \end{matrix}\right." /></a>
+
+### End-Effector 
+
+The end effector position depends on the position of the chassis plus the terms relative to the orientation of the chassis and of the arm.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{pmatrix}&space;x_{ee}&space;\\&space;y_{ee}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;x&space;&plus;&space;dcos(\theta)&space;&plus;&space;lcos(\theta&space;&plus;&space;\phi)&space;\\&space;y&space;&plus;&space;d&space;sin(\theta)&space;&plus;&space;l&space;sin(\theta&space;&plus;&space;\phi)&space;\end{pmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{pmatrix}&space;x_{ee}&space;\\&space;y_{ee}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;x&space;&plus;&space;dcos(\theta)&space;&plus;&space;lcos(\theta&space;&plus;&space;\phi)&space;\\&space;y&space;&plus;&space;d&space;sin(\theta)&space;&plus;&space;l&space;sin(\theta&space;&plus;&space;\phi)&space;\end{pmatrix}" title="\begin{pmatrix} x_{ee} \\ y_{ee} \end{pmatrix} = \begin{pmatrix} x + dcos(\theta) + lcos(\theta + \phi) \\ y + d sin(\theta) + l sin(\theta + \phi) \end{pmatrix}" /></a>
+
+It's easy to see that this is not a flat output, even differentiating it we have mixed dependencies on the other state variables which do not allow to retrieve all the state from their knowledge.
+
+### Define a control law over a deisred ee trajectory
+
+The hint says to try the input-output linearization, to do so we first need to find the T matrix. We know the desired trajectory so we can also differentiate it.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{pmatrix}&space;\dot{x_{ee}}&space;\\&space;\dot{y_{ee}}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;\dot{x}&space;-&space;d\dot{\theta}sin(\theta)&space;-&space;l(\dot{\theta}&space;&plus;&space;\dot{\phi})sin(\theta&space;&plus;&space;\phi)&space;\\&space;\dot{y}&space;&plus;&space;d\dot{\theta}cos(\theta)&space;&plus;&space;l(\dot{\theta}&space;&plus;&space;\dot{\phi})cos(\theta&space;&plus;&space;\phi)&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;vcos(\theta)&space;-&space;dwsin(\theta)&space;-&space;l(w&space;&plus;&space;u)sin(\theta&space;&plus;&space;\phi)&space;\\&space;vsin(\theta)&space;&plus;&space;dwcos(\theta)&space;&plus;&space;l(w&space;&plus;&space;u)cos(\theta&space;&plus;&space;\phi)&space;\end{pmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{pmatrix}&space;\dot{x_{ee}}&space;\\&space;\dot{y_{ee}}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;\dot{x}&space;-&space;d\dot{\theta}sin(\theta)&space;-&space;l(\dot{\theta}&space;&plus;&space;\dot{\phi})sin(\theta&space;&plus;&space;\phi)&space;\\&space;\dot{y}&space;&plus;&space;d\dot{\theta}cos(\theta)&space;&plus;&space;l(\dot{\theta}&space;&plus;&space;\dot{\phi})cos(\theta&space;&plus;&space;\phi)&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;vcos(\theta)&space;-&space;dwsin(\theta)&space;-&space;l(w&space;&plus;&space;u)sin(\theta&space;&plus;&space;\phi)&space;\\&space;vsin(\theta)&space;&plus;&space;dwcos(\theta)&space;&plus;&space;l(w&space;&plus;&space;u)cos(\theta&space;&plus;&space;\phi)&space;\end{pmatrix}" title="\begin{pmatrix} \dot{x_{ee}} \\ \dot{y_{ee}} \end{pmatrix} = \begin{pmatrix} \dot{x} - d\dot{\theta}sin(\theta) - l(\dot{\theta} + \dot{\phi})sin(\theta + \phi) \\ \dot{y} + d\dot{\theta}cos(\theta) + l(\dot{\theta} + \dot{\phi})cos(\theta + \phi) \end{pmatrix} = \begin{pmatrix} vcos(\theta) - dwsin(\theta) - l(w + u)sin(\theta + \phi) \\ vsin(\theta) + dwcos(\theta) + l(w + u)cos(\theta + \phi) \end{pmatrix}" /></a>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=T=&space;\begin{bmatrix}&space;cos(\theta)&space;&&space;-dsin(\theta)-lsin(\theta&space;&plus;&space;\phi)&space;&&space;-lsin(\theta&space;&plus;&space;\phi)&space;\\&space;sin(\theta)&space;&&space;dcos(\theta)&plus;lcos(\theta&space;&plus;&space;\phi)&space;&&space;lcos(\theta&space;&plus;&space;\phi)&space;\end{bmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?T=&space;\begin{bmatrix}&space;cos(\theta)&space;&&space;-dsin(\theta)-lsin(\theta&space;&plus;&space;\phi)&space;&&space;-lsin(\theta&space;&plus;&space;\phi)&space;\\&space;sin(\theta)&space;&&space;dcos(\theta)&plus;lcos(\theta&space;&plus;&space;\phi)&space;&&space;lcos(\theta&space;&plus;&space;\phi)&space;\end{bmatrix}" title="T= \begin{bmatrix} cos(\theta) & -dsin(\theta)-lsin(\theta + \phi) & -lsin(\theta + \phi) \\ sin(\theta) & dcos(\theta)+lcos(\theta + \phi) & lcos(\theta + \phi) \end{bmatrix}" /></a>
+
+So we can linearize the input-output relationship using this matrix saying that the vector v, w, u is equal to inv(T)\*(new inputs). This means we can use the control law in the new inputs as:
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=w_i&space;=&space;\dot{x_{ee}}&space;&plus;&space;k_i&space;(x_{ee}&space;-&space;x)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?w_i&space;=&space;\dot{x_{ee}}&space;&plus;&space;k_i&space;(x_{ee}&space;-&space;x)" title="w_i = \dot{x_{ee}} + k_i (x_{ee} - x)" /></a>
+
+Equal for the second input on the y coordinate. 
+
+## Problem 2 
+
+TODO
+
+## Problem 3
+
+TODO
+
+# Class Test 2011/2012
+
+## Problem 1
+
+### Constraint
+
+It's easy to see that the constraint is Pfaffian, it can be written as a matrix A (composed by a1 and a2) multiplying the generalized velocities, and this matrix depens only on constant parameters and the cofngiuration.
+
+### Kinematic Model
+
+From the constraint we must find the null space of transpose(A).
 
  
