@@ -238,5 +238,58 @@ TODO
 
 TODO
 
+# Class Test 2013/2014
+
+## Problem 1
+
+### Write the diffferential constraint.
+
+We just need to substitute the first two expressions in the third one and bring all the terms to one side.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=x_1&space;\dot{x_2}&space;-&space;x_2&space;\dot{x_1}&space;-&space;\dot{x_3}&space;=&space;0" target="_blank"><img src="https://latex.codecogs.com/gif.latex?x_1&space;\dot{x_2}&space;-&space;x_2&space;\dot{x_1}&space;-&space;\dot{x_3}&space;=&space;0" title="x_1 \dot{x_2} - x_2 \dot{x_1} - \dot{x_3} = 0" /></a>
+
+### Prove that the constraint is non holonomic nad the system controllability
+
+The two thingas to check are the same, if the system is controllable than the constraint is non holonomic. To study the controllability we need to find the vector field.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\\&space;g_1&space;=&space;\begin{pmatrix}&space;1&space;\\&space;0&space;\\&space;-x_2&space;\end{pmatrix}&space;\hspace{0.5cm}&space;g_2&space;=&space;\begin{pmatrix}&space;0&space;\\&space;1&space;\\&space;x_1&space;\end{pmatrix}&space;\\&space;\begin{bmatrix}&space;g_1,g_2&space;\end{bmatrix}&space;=&space;g_3=&space;\begin{pmatrix}&space;0&space;\\&space;0&space;\\&space;2&space;\end{pmatrix}&space;\hspace{0.5cm}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\\&space;g_1&space;=&space;\begin{pmatrix}&space;1&space;\\&space;0&space;\\&space;-x_2&space;\end{pmatrix}&space;\hspace{0.5cm}&space;g_2&space;=&space;\begin{pmatrix}&space;0&space;\\&space;1&space;\\&space;x_1&space;\end{pmatrix}&space;\\&space;\begin{bmatrix}&space;g_1,g_2&space;\end{bmatrix}&space;=&space;g_3=&space;\begin{pmatrix}&space;0&space;\\&space;0&space;\\&space;2&space;\end{pmatrix}&space;\hspace{0.5cm}" title="\\ g_1 = \begin{pmatrix} 1 \\ 0 \\ -x_2 \end{pmatrix} \hspace{0.5cm} g_2 = \begin{pmatrix} 0 \\ 1 \\ x_1 \end{pmatrix} \\ \begin{bmatrix} g_1,g_2 \end{bmatrix} = g_3= \begin{pmatrix} 0 \\ 0 \\ 2 \end{pmatrix} \hspace{0.5cm}" /></a>
+
+The determinand of the matrix composed by the g vectors is 2, so it's full rank and the system is controllable with non holonomic constraints.
+
+### Compute the final state displacement after LB maneuver
+
+We need to compute four steps when the inputs are put to +1 alternatively and then to -1 in the same order, then compute the displacement between the initial and final configuration. We shoul end up with an  infinitesimal displacement in the direction of the LB.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\\&space;\left\{\begin{matrix}&space;x_1(\epsilon)&space;=&space;x_{10}&space;&plus;&space;\epsilon&space;\\&space;x_2(\epsilon)&space;=&space;x_{20}&space;\\&space;x_3(\epsilon)&space;=&space;x_{30}&space;-&space;x_{20}\epsilon&space;\end{matrix}\right&space;\\&space;\\&space;\\&space;\left\{\begin{matrix}&space;x_1(2\epsilon)&space;=&space;x_{10}&space;&plus;&space;\epsilon&space;\\&space;x_2(2\epsilon)&space;=&space;x_{20}&space;&plus;\epsilon&space;\\&space;x_3(2\epsilon)&space;=&space;x_{30}&space;-&space;x_{20}\epsilon&space;&plus;&space;(x_{10}&space;&plus;&space;\epsilon)\epsilon&space;\end{matrix}\right&space;\\&space;\\&space;\\&space;\left\{\begin{matrix}&space;x_1(3\epsilon)&space;=&space;x_{10}&space;\\&space;x_2(3\epsilon)&space;=&space;x_{20}&space;&plus;&space;\epsilon&space;\\&space;x_3(3\epsilon)&space;=&space;x_{30}&space;-&space;x_{20}\epsilon&space;&plus;&space;(x_{10}&space;&plus;&space;\epsilon)\epsilon&space;&plus;&space;(x_{20}&space;&plus;&space;\epsilon)\epsilon&space;\end{matrix}\right&space;\\&space;\\&space;\\&space;\left\{\begin{matrix}&space;x_1(4\epsilon)&space;=&space;x_{10}&space;\\&space;x_2(4\epsilon)&space;=&space;x_{20}&space;\\&space;x_3(4\epsilon)&space;=&space;x_{30}&space;-&space;2\epsilon^2&space;\end{matrix}\right" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\\&space;\left\{\begin{matrix}&space;x_1(\epsilon)&space;=&space;x_{10}&space;&plus;&space;\epsilon&space;\\&space;x_2(\epsilon)&space;=&space;x_{20}&space;\\&space;x_3(\epsilon)&space;=&space;x_{30}&space;-&space;x_{20}\epsilon&space;\end{matrix}\right&space;\\&space;\\&space;\\&space;\left\{\begin{matrix}&space;x_1(2\epsilon)&space;=&space;x_{10}&space;&plus;&space;\epsilon&space;\\&space;x_2(2\epsilon)&space;=&space;x_{20}&space;&plus;\epsilon&space;\\&space;x_3(2\epsilon)&space;=&space;x_{30}&space;-&space;x_{20}\epsilon&space;&plus;&space;(x_{10}&space;&plus;&space;\epsilon)\epsilon&space;\end{matrix}\right&space;\\&space;\\&space;\\&space;\left\{\begin{matrix}&space;x_1(3\epsilon)&space;=&space;x_{10}&space;\\&space;x_2(3\epsilon)&space;=&space;x_{20}&space;&plus;&space;\epsilon&space;\\&space;x_3(3\epsilon)&space;=&space;x_{30}&space;-&space;x_{20}\epsilon&space;&plus;&space;(x_{10}&space;&plus;&space;\epsilon)\epsilon&space;&plus;&space;(x_{20}&space;&plus;&space;\epsilon)\epsilon&space;\end{matrix}\right&space;\\&space;\\&space;\\&space;\left\{\begin{matrix}&space;x_1(4\epsilon)&space;=&space;x_{10}&space;\\&space;x_2(4\epsilon)&space;=&space;x_{20}&space;\\&space;x_3(4\epsilon)&space;=&space;x_{30}&space;-&space;2\epsilon^2&space;\end{matrix}\right" title="\\ \left\{\begin{matrix} x_1(\epsilon) = x_{10} + \epsilon \\ x_2(\epsilon) = x_{20} \\ x_3(\epsilon) = x_{30} - x_{20}\epsilon \end{matrix}\right \\ \\ \\ \left\{\begin{matrix} x_1(2\epsilon) = x_{10} + \epsilon \\ x_2(2\epsilon) = x_{20} +\epsilon \\ x_3(2\epsilon) = x_{30} - x_{20}\epsilon + (x_{10} + \epsilon)\epsilon \end{matrix}\right \\ \\ \\ \left\{\begin{matrix} x_1(3\epsilon) = x_{10} \\ x_2(3\epsilon) = x_{20} + \epsilon \\ x_3(3\epsilon) = x_{30} - x_{20}\epsilon + (x_{10} + \epsilon)\epsilon + (x_{20} + \epsilon)\epsilon \end{matrix}\right \\ \\ \\ \left\{\begin{matrix} x_1(4\epsilon) = x_{10} \\ x_2(4\epsilon) = x_{20} \\ x_3(4\epsilon) = x_{30} - 2\epsilon^2 \end{matrix}\right" /></a>
+
+In fact the final displacement is a second grade power of epsilon times ( 0 0 2) which is the LB. 
+
+## Problem 2
+
+### A team of two mobile robots that can translate and rotate in the plane
+
+A signle robot with these properties has C = SE(2), having two of them we have a cartesian product S(2) x SE(2) of dimension 6.
+
+### A team of two mobile robots that can translate and rotate in the plane and are connected by a rope
+
+The robe induces one inequality constraint, until the rope is on tension the robots can move freely, when that happens they have a local restriction, but non a global one. The configuration space is a subset of the first one, because in every point they may have this constraint active.
+
+### A team of two mobile robots that can translate and rotate in the plane and are connected by a rigid bar
+
+The rigid bar constraint the robots always, they can move only on circle with the other as center or together concordly but they will not be able to be in every position with any orientation.
+We can describe the situation as havinf 3 dimension of SE(2) for the first robot which can be anywhere, then SO(2) for the angle of the bar linkin the two robot and SO(2) for the orientation of the second robot. C dimension is 5.
+
+### A spacecraft with a 6R robot arm
+
+A spacecraft can be positioned and oriented SE(3), then the arm has 6 dof of type SO(2). The C dimension is 6 + 6 = 12.
+
+### The last link of 6R robot arm mounted on a spacecraft
+
+The last link can be positioned and oriented so it has C dimension = 6 and it's SE(3).
+
+## Problem 3 
+
+TODO
+
 
  
