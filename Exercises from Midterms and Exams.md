@@ -345,6 +345,85 @@ It's easy to see that the constraint is Pfaffian, it can be written as a matrix 
 
 ### Kinematic Model
 
-From the constraint we must find the null space of transpose(A).
+From the constraint we must find the null space of transpose(A). It's easy to see that the vector field is composed by one signle vector ( a1 , -a2 ) which multiplyies one single input of the system.
+
+### Controllability
+
+In this case we have a state of dimension 2 and only one vector of the vector field, so we need another one. Anyway, we cannot derive it from the kinematic model and we cannot use the LB, because we have just one vector so its Lie Bracket with itself would be a null vector. This means the system is not controllable and the constraint is indeed holonomic.
+
+## Problem 2 
+
+TODO
+
+## Problem 3
+
+TODO
+
+# Class Test 2010/2011 A
+
+## Problem 1
+
+### Generalized Coordinates
+
+Starting from the first vehicle we need four coordinates: (x,y) for the position, theta for the orientation of the chassis and phi for the orientation of the wheels. Then we need to add another coordinate for the orientation of the trailer's chassis and for the orientation of its wheels, let's call it theta and phi of the trailer. 
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=q&space;=&space;\begin{bmatrix}x&space;&&space;y&space;&&space;\theta&space;&&space;\phi&space;&&space;\theta_t&space;&&space;\phi_t&space;\end{bmatrix}^T" target="_blank"><img src="https://latex.codecogs.com/gif.latex?q&space;=&space;\begin{bmatrix}x&space;&&space;y&space;&&space;\theta&space;&&space;\phi&space;&&space;\theta_t&space;&&space;\phi_t&space;\end{bmatrix}^T" title="q = \begin{bmatrix}x & y & \theta & \phi & \gamma \end{bmatrix}^T" /></a>
+
+### Pfaffian form of the Constraints
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\left\{\begin{matrix}&space;\dot{x}sin(\theta)&space;-&space;\dot{y}cos(\theta)&space;=&space;0&space;\\&space;\dot{x_f}sin(\theta&space;&plus;&space;\phi)&space;-&space;\dot{y_f}cos(\theta&space;&plus;&space;\phi)&space;=&space;0&space;\\&space;\dot{x_t}sin(\theta_t&space;&plus;&space;\phi_t)&space;-&space;\dot{y_t}cos(\theta_t&space;&plus;&space;\phi_t)&space;=&space;0&space;\end{matrix}\right." target="_blank"><img src="https://latex.codecogs.com/gif.latex?\left\{\begin{matrix}&space;\dot{x}sin(\theta)&space;-&space;\dot{y}cos(\theta)&space;=&space;0&space;\\&space;\dot{x_f}sin(\theta&space;&plus;&space;\phi)&space;-&space;\dot{y_f}cos(\theta&space;&plus;&space;\phi)&space;=&space;0&space;\\&space;\dot{x_t}sin(\theta_t&space;&plus;&space;\phi_t)&space;-&space;\dot{y_t}cos(\theta_t&space;&plus;&space;\phi_t)&space;=&space;0&space;\end{matrix}\right." title="\left\{\begin{matrix} \dot{x}sin(\theta) - \dot{y}cos(\theta) = 0 \\ \dot{x_f}sin(\theta + \phi) - \dot{y_f}cos(\theta + \phi) = 0 \\ \dot{x_t}sin(\theta_t + \phi_t) - \dot{y_t}cos(\theta_t + \phi_t) = 0 \end{matrix}\right." /></a>
+
+Now we'll derive the formulas for the position of the 'center' of the front wheels and trailer wheels to substitute them inside the equations, so to have everything express only in the correct parameters.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\\&space;\begin{pmatrix}&space;x_f&space;\\&space;y_f&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;x&space;&plus;&space;lcos(\theta)&space;\\&space;y&space;&plus;&space;lsen(\theta)\end{pmatrix}&space;\rightarrow&space;\begin{pmatrix}&space;\dot{x_f}&space;\\&space;\dot{y_f}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;\dot{x}&space;-&space;l\dot{\theta}sen(\theta)&space;\\&space;\dot{y}&space;&plus;&space;l\dot{\theta}cos(\theta)\end{pmatrix}&space;\\&space;\\&space;\begin{pmatrix}&space;x_t&space;\\&space;y_t&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;x&space;-&space;l_tcos(\theta_t)&space;\\&space;y&space;-&space;l_tsen(\theta_t)\end{pmatrix}&space;\rightarrow&space;\begin{pmatrix}&space;\dot{x_t}&space;\\&space;\dot{y_t}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;\dot{x}&space;&plus;&space;l_t\dot{\theta_t}sen(\theta_t)&space;\\&space;\dot{y}&space;-&space;l_t\dot{\theta_t}cos(\theta_t)\end{pmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\\&space;\begin{pmatrix}&space;x_f&space;\\&space;y_f&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;x&space;&plus;&space;lcos(\theta)&space;\\&space;y&space;&plus;&space;lsen(\theta)\end{pmatrix}&space;\rightarrow&space;\begin{pmatrix}&space;\dot{x_f}&space;\\&space;\dot{y_f}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;\dot{x}&space;-&space;l\dot{\theta}sen(\theta)&space;\\&space;\dot{y}&space;&plus;&space;l\dot{\theta}cos(\theta)\end{pmatrix}&space;\\&space;\\&space;\begin{pmatrix}&space;x_t&space;\\&space;y_t&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;x&space;-&space;l_tcos(\theta_t)&space;\\&space;y&space;-&space;l_tsen(\theta_t)\end{pmatrix}&space;\rightarrow&space;\begin{pmatrix}&space;\dot{x_t}&space;\\&space;\dot{y_t}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;\dot{x}&space;&plus;&space;l_t\dot{\theta_t}sen(\theta_t)&space;\\&space;\dot{y}&space;-&space;l_t\dot{\theta_t}cos(\theta_t)\end{pmatrix}" title="\\ \begin{pmatrix} x_f \\ y_f \end{pmatrix} = \begin{pmatrix} x + lcos(\theta) \\ y + lsen(\theta)\end{pmatrix} \rightarrow \begin{pmatrix} \dot{x_f} \\ \dot{y_f} \end{pmatrix} = \begin{pmatrix} \dot{x} - l\dot{\theta}sen(\theta) \\ \dot{y} + l\dot{\theta}cos(\theta)\end{pmatrix} \\ \\ \begin{pmatrix} x_t \\ y_t \end{pmatrix} = \begin{pmatrix} x - l_tcos(\theta_t) \\ y - l_tsen(\theta_t)\end{pmatrix} \rightarrow \begin{pmatrix} \dot{x_t} \\ \dot{y_t} \end{pmatrix} = \begin{pmatrix} \dot{x} + l_t\dot{\theta_t}sen(\theta_t) \\ \dot{y} - l_t\dot{\theta_t}cos(\theta_t)\end{pmatrix}" /></a>
+
+So the final constraints can be wrriten in equations and below in matrix form:
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\left\{\begin{matrix}&space;\dot{x}sen(\theta)-\dot{y}cos(\theta)&space;=&space;0&space;\\&space;\dot{x}sen(\theta&space;&plus;&space;\phi)&space;-&space;\dot{y}cos(\theta&space;&plus;&space;\phi)&space;-&space;l\dot{\theta}cos(\phi)&space;=&space;0&space;\\&space;\dot{x}sen(\theta_t&space;&plus;&space;\phi_t)&space;-&space;\dot{y}cos(\theta_t&space;&plus;&space;\phi_t)&space;&plus;l_t\dot{\theta_t}cos(\phi_t)&space;=&space;0&space;\end{matrix}\right." target="_blank"><img src="https://latex.codecogs.com/gif.latex?\left\{\begin{matrix}&space;\dot{x}sen(\theta)-\dot{y}cos(\theta)&space;=&space;0&space;\\&space;\dot{x}sen(\theta&space;&plus;&space;\phi)&space;-&space;\dot{y}cos(\theta&space;&plus;&space;\phi)&space;-&space;l\dot{\theta}cos(\phi)&space;=&space;0&space;\\&space;\dot{x}sen(\theta_t&space;&plus;&space;\phi_t)&space;-&space;\dot{y}cos(\theta_t&space;&plus;&space;\phi_t)&space;&plus;l_t\dot{\theta_t}cos(\phi_t)&space;=&space;0&space;\end{matrix}\right." title="\left\{\begin{matrix} \dot{x}sen(\theta)-\dot{y}cos(\theta) = 0 \\ \dot{x}sen(\theta + \phi) - \dot{y}cos(\theta + \phi) - l\dot{\theta}cos(\phi) = 0 \\ \dot{x}sen(\theta_t + \phi_t) - \dot{y}cos(\theta_t + \phi_t) +l_t\dot{\theta_t}cos(\phi_t) = 0 \end{matrix}\right." /></a>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{pmatrix}sen(\theta)&space;&&space;-cos(\theta)&space;&&space;0&&space;0&space;&&space;0&space;&&space;0&space;\\&space;sen(\theta&space;&plus;&space;\phi)&space;&&space;-cos(\theta&space;&plus;&space;\phi)&space;&&space;-lcos(\phi)&space;&&space;0&space;&&space;0&space;&&space;0&space;\\&space;en(\theta_t&space;&plus;&space;\phi_t)&space;&&space;-cos(\theta_t&space;&plus;&space;\phi_t)&space;&&space;0&space;&&space;0&space;&&space;l_t&space;cos(\phi_t)&space;&&space;0&space;\end{pmatrix}&space;\begin{pmatrix}&space;\dot{x}&space;\\&space;\dot{y}&space;\\&space;\dot{\theta}&space;\\&space;\dot{\phi}&space;\\&space;\dot{\theta_t}&space;\\&space;\dot{\phi_t}\end{pmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{pmatrix}sen(\theta)&space;&&space;-cos(\theta)&space;&&space;0&&space;0&space;&&space;0&space;&&space;0&space;\\&space;sen(\theta&space;&plus;&space;\phi)&space;&&space;-cos(\theta&space;&plus;&space;\phi)&space;&&space;-lcos(\phi)&space;&&space;0&space;&&space;0&space;&&space;0&space;\\&space;sen(\theta_t&space;&plus;&space;\phi_t)&space;&&space;-cos(\theta_t&space;&plus;&space;\phi_t)&space;&&space;0&space;&&space;0&space;&&space;l_t&space;cos(\phi_t)&space;&&space;0&space;\end{pmatrix}&space;\begin{pmatrix}&space;\dot{x}&space;\\&space;\dot{y}&space;\\&space;\dot{\theta}&space;\\&space;\dot{\phi}&space;\\&space;\dot{\theta_t}&space;\\&space;\dot{\phi_t}\end{pmatrix}" title="\begin{pmatrix}sen(\theta) & -cos(\theta) & 0& 0 & 0 & 0 \\ sen(\theta + \phi) & -cos(\theta + \phi) & -lcos(\phi) & 0 & 0 & 0 \\ en(\theta_t + \phi_t) & -cos(\theta_t + \phi_t) & 0 & 0 & l_t cos(\phi_t) & 0 \end{pmatrix} \begin{pmatrix} \dot{x} \\ \dot{y} \\ \dot{\theta} \\ \dot{\phi} \\ \dot{\theta_t} \\ \dot{\phi_t}\end{pmatrix}" /></a>
+
+### Kinematic Model
+
+From the matrix above we can derive the vector field for the kinematic model. Being 3x6 the null space has dimension 3, the first two vectors are easy to find and correspond to the all-zeros columns:
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=g_1&space;=&space;\begin{pmatrix}&space;0&space;\\&space;0\\0\\1\\0\\0&space;\end{pmatrix}&space;\hspace{0.5cm}&space;g_2&space;=&space;\begin{pmatrix}&space;0\\0\\0\\0\\0\\1&space;\end{pmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?g_1&space;=&space;\begin{pmatrix}&space;0&space;\\&space;0\\0\\1\\0\\0&space;\end{pmatrix}&space;\hspace{0.5cm}&space;g_2&space;=&space;\begin{pmatrix}&space;0\\0\\0\\0\\0\\1&space;\end{pmatrix}" title="g_1 = \begin{pmatrix} 0 \\ 0\\0\\1\\0\\0 \end{pmatrix} \hspace{0.5cm} g_2 = \begin{pmatrix} 0\\0\\0\\0\\0\\1 \end{pmatrix}" /></a>
+
+The third one we can easily fin solving parametrically the equations and is:
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=g_3&space;=&space;\begin{pmatrix}&space;cos(\theta)&space;\\&space;sen(\theta)\\&space;\frac{tg(\phi)}{l_t}\\0\\-&space;\frac{sen(\theta&space;-&space;\theta_t&space;-&space;\phi_t)}{l_t&space;cos(\phi_t)}\\0&space;\end{pmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?g_3&space;=&space;\begin{pmatrix}&space;cos(\theta)&space;\\&space;sen(\theta)\\&space;\frac{tg(\phi)}{l_t}\\0\\-&space;\frac{sen(\theta&space;-&space;\theta_t&space;-&space;\phi_t)}{l_t&space;cos(\phi_t)}\\0&space;\end{pmatrix}" title="g_3 = \begin{pmatrix} cos(\theta) \\ sen(\theta)\\ \frac{tg(\phi)}{l_t}\\0\\- \frac{sen(\theta - \theta_t - \phi_t)}{l_t cos(\phi_t)}\\0 \end{pmatrix}" /></a>
+
+where the inputs are steering velocity of the main vehicle, the steering velocity of the trailer and then the velocity of the rear wheels. 
+
+## Problem 2
+
+First we can derive the position of the caster wheel dependiong on the configuration coordinates:
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\\&space;\begin{pmatrix}&space;x_c&space;\\&space;y_c&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;x&space;&plus;&space;Lcos(\theta)&space;\\&space;y&space;&plus;&space;Lsen(\theta)&space;\end{pmatrix}&space;\\&space;\begin{pmatrix}&space;\dot{x_c}&space;\\&space;\dot{y_c}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;\dot{x}&space;-&space;L\dot{\theta}sen(\theta)&space;\\&space;\dot{y}&space;&plus;&space;L\dot{\theta}cos(\theta)&space;\end{pmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\\&space;\begin{pmatrix}&space;x_c&space;\\&space;y_c&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;x&space;&plus;&space;Lcos(\theta)&space;\\&space;y&space;&plus;&space;Lsen(\theta)&space;\end{pmatrix}&space;\\&space;\begin{pmatrix}&space;\dot{x_c}&space;\\&space;\dot{y_c}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;\dot{x}&space;-&space;L\dot{\theta}sen(\theta)&space;\\&space;\dot{y}&space;&plus;&space;L\dot{\theta}cos(\theta)&space;\end{pmatrix}" title="\\ \begin{pmatrix} x_c \\ y_c \end{pmatrix} = \begin{pmatrix} x + Lcos(\theta) \\ y + Lsen(\theta) \end{pmatrix} \\ \begin{pmatrix} \dot{x_c} \\ \dot{y_c} \end{pmatrix} = \begin{pmatrix} \dot{x} - L\dot{\theta}sen(\theta) \\ \dot{y} + L\dot{\theta}cos(\theta) \end{pmatrix}" /></a>
+
+We can easily see that out output, which is the velocity of the caster wheel, is a linear transformation of the inputs.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\\&space;T&space;=&space;\begin{bmatrix}&space;cos(\theta)&space;&&space;-Lsen(\theta)&space;\\&space;sen(\theta)&space;&&space;Lcos(\theta)\end{bmatrix}&space;\\&space;T^{-1}&space;=&space;\begin{bmatrix}&space;cos(\theta)&space;&&space;sen(\theta)&space;\\&space;-\frac{sen(\theta)}{L}&space;&&space;\frac{cos(\theta)}{L}\end{bmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\\&space;T&space;=&space;\begin{bmatrix}&space;cos(\theta)&space;&&space;-Lsen(\theta)&space;\\&space;sen(\theta)&space;&&space;Lcos(\theta)\end{bmatrix}&space;\\&space;T^{-1}&space;=&space;\begin{bmatrix}&space;cos(\theta)&space;&&space;sen(\theta)&space;\\&space;-\frac{sen(\theta)}{L}&space;&&space;\frac{cos(\theta)}{L}\end{bmatrix}" title="\\ T = \begin{bmatrix} cos(\theta) & -Lsen(\theta) \\ sen(\theta) & Lcos(\theta)\end{bmatrix} \\ T^{-1} = \begin{bmatrix} cos(\theta) & sen(\theta) \\ -\frac{sen(\theta)}{L} & \frac{cos(\theta)}{L}\end{bmatrix}" /></a>
+
+Now, using the input-output linearization we have that the input velocities to the system is inv(T) times the velocity of the caster wheel. To express the velocity of the caster wheel in the x,y-frame we can consider that it has a norm Vc times cos or sin of an angle (cos for the x component and sen for the y). 
+The angle depends on the orientation of the desired velocity, which for us is theta - alpha. 
+
+Solving the expression we obtain the v, w inputs that we can transform to wr and wl which are the actual input of the differential drive. 
+
+# Class Test 2010/2011 B
+
+## Problem 1
+
+TODO
+
+## Problem 2
+
+TODO
+
+# Class Test 2009/2010 A
+
+## Problem 1
+
+
 
  
