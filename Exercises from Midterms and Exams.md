@@ -424,6 +424,48 @@ TODO
 
 ## Problem 1
 
+### Generalized Coordinates
+
+First we think about the coordinates for the tricycle: (x,y) for the position of P, theta for the chassis' orientation and phi for the front wheel's orientation. The trailer position can be recovered using the position of P and the angle of the revolute joint connecting it to the tricycle, so we only need this angle theta_trailer. 
+
+Our final configuration vector is made up by x y theta phi theta_t. 
+
+### Pfaffian Constraint
+
+The constraints of pure rolling are applied to the front and rear wheel of the tricycle and on the wheel of the trailer. 
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\left\{\begin{matrix}&space;\dot{x}sen(\theta)&space;-&space;\dot{y}cos(\theta)&space;=&space;0&space;\\&space;\dot{x_f}sen(\theta&space;&plus;&space;\phi)&space;-&space;\dot{y_f}cos(\theta&space;&plus;&space;\phi)&space;=&space;0&space;\\&space;\dot{x_t}sen(\theta_t)&space;-&space;\dot{y_t}cos(\theta_t)&space;=&space;0&space;\end{matrix}\right." target="_blank"><img src="https://latex.codecogs.com/gif.latex?\left\{\begin{matrix}&space;\dot{x}sen(\theta)&space;-&space;\dot{y}cos(\theta)&space;=&space;0&space;\\&space;\dot{x_f}sen(\theta&space;&plus;&space;\phi)&space;-&space;\dot{y_f}cos(\theta&space;&plus;&space;\phi)&space;=&space;0&space;\\&space;\dot{x_t}sen(\theta_t)&space;-&space;\dot{y_t}cos(\theta_t)&space;=&space;0&space;\end{matrix}\right." title="\left\{\begin{matrix} \dot{x}sen(\theta) - \dot{y}cos(\theta) = 0 \\ \dot{x_f}sen(\theta + \phi) - \dot{y_f}cos(\theta + \phi) = 0 \\ \dot{x_t}sen(\theta_t) - \dot{y_t}cos(\theta_t) = 0 \end{matrix}\right." /></a>
+
+Expressing the position of the front wheel and of the trailer wheel wrt the configuration variables and deriving them we obtain the full system only in the right coordinates.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\left\{\begin{matrix}&space;\dot{x}sen(\theta)&space;-&space;\dot{y}cos(\theta)&space;=&space;0&space;\\&space;\dot{x}sen(\theta&space;&plus;&space;\phi)&space;-&space;\dot{y}cos(\theta&space;&plus;&space;\phi)&space;-l\dot{\theta}cos(\phi)&space;=&space;0&space;\\&space;\dot{x}sen(\theta_t)&space;-&space;\dot{y}cos(\theta_t)&space;&plus;&space;l_t&space;\dot{\theta_t}=&space;0&space;\end{matrix}\right." target="_blank"><img src="https://latex.codecogs.com/gif.latex?\left\{\begin{matrix}&space;\dot{x}sen(\theta)&space;-&space;\dot{y}cos(\theta)&space;=&space;0&space;\\&space;\dot{x}sen(\theta&space;&plus;&space;\phi)&space;-&space;\dot{y}cos(\theta&space;&plus;&space;\phi)&space;-l\dot{\theta}cos(\phi)&space;=&space;0&space;\\&space;\dot{x}sen(\theta_t)&space;-&space;\dot{y}cos(\theta_t)&space;&plus;&space;l_t&space;\dot{\theta_t}=&space;0&space;\end{matrix}\right." title="\left\{\begin{matrix} \dot{x}sen(\theta) - \dot{y}cos(\theta) = 0 \\ \dot{x}sen(\theta + \phi) - \dot{y}cos(\theta + \phi) -l\dot{\theta}cos(\phi) = 0 \\ \dot{x}sen(\theta_t) - \dot{y}cos(\theta_t) + l_t \dot{\theta_t}= 0 \end{matrix}\right." /></a>
+
+In matrix form:
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\\&space;\begin{bmatrix}&space;sen(\theta)&space;&&space;-cos(\theta)&space;&&space;0&space;&&space;0&space;&&space;0&space;\\&space;sen(\theta&space;&plus;&space;\phi)&space;&&space;-cos(\theta&space;&plus;&space;\phi)&space;&&space;-lcos/\phi&space;&&space;0&space;&&space;0&space;\\&space;sen(\theta_t)&space;&&space;-cos(\theta_t)&space;&&space;0&space;&&space;0&space;&&space;l_t&space;\end{bmatrix}&space;\begin{pmatrix}&space;\dot{x}&space;\\&space;\dot{y}&space;\\&space;\dot{\theta}&space;\\&space;\dot{\phi}&space;\\&space;\dot{\theta_t}&space;\end{pmatrix}&space;=&space;\mathbf{0}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\\&space;\begin{bmatrix}&space;sen(\theta)&space;&&space;-cos(\theta)&space;&&space;0&space;&&space;0&space;&&space;0&space;\\&space;sen(\theta&space;&plus;&space;\phi)&space;&&space;-cos(\theta&space;&plus;&space;\phi)&space;&&space;-lcos/\phi&space;&&space;0&space;&&space;0&space;\\&space;sen(\theta_t)&space;&&space;-cos(\theta_t)&space;&&space;0&space;&&space;0&space;&&space;l_t&space;\end{bmatrix}&space;\begin{pmatrix}&space;\dot{x}&space;\\&space;\dot{y}&space;\\&space;\dot{\theta}&space;\\&space;\dot{\phi}&space;\\&space;\dot{\theta_t}&space;\end{pmatrix}&space;=&space;\mathbf{0}" title="\\ \begin{bmatrix} sen(\theta) & -cos(\theta) & 0 & 0 & 0 \\ sen(\theta + \phi) & -cos(\theta + \phi) & -lcos/\phi & 0 & 0 \\ sen(\theta_t) & -cos(\theta_t) & 0 & 0 & l_t \end{bmatrix} \begin{pmatrix} \dot{x} \\ \dot{y} \\ \dot{\theta} \\ \dot{\phi} \\ \dot{\theta_t} \end{pmatrix} = \mathbf{0}" /></a>
 
 
+### Kinematic Model
+From the matrix we can obtain the kinematic model. The null space of the matrix has dimension 2: one of the vector is easy to find by inspection (the fourth column is all zeros), the other must be adapted from the knowledge of the unicycle.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\\&space;g_1&space;=&space;\begin{pmatrix}&space;0&space;\\&space;0&space;\\&space;0&space;\\&space;1&space;\\&space;0&space;\end{pmatrix}&space;\hspace{0.5cm}&space;g_2&space;=&space;\begin{pmatrix}&space;cos(\theta)&space;\\&space;sen(\theta)&space;\\&space;\alpha&space;\\&space;0&space;\\&space;\beta&space;\end{pmatrix}&space;\hspace{1cm}&space;\alpha&space;=&space;\frac{tg(\phi)}{l}&space;,&space;\beta&space;=&space;-&space;\frac{sen(\theta_t&space;-&space;\theta)}{l_t}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\\&space;g_1&space;=&space;\begin{pmatrix}&space;0&space;\\&space;0&space;\\&space;0&space;\\&space;1&space;\\&space;0&space;\end{pmatrix}&space;\hspace{0.5cm}&space;g_2&space;=&space;\begin{pmatrix}&space;cos(\theta)&space;\\&space;sen(\theta)&space;\\&space;\alpha&space;\\&space;0&space;\\&space;\beta&space;\end{pmatrix}&space;\hspace{1cm}&space;\alpha&space;=&space;\frac{tg(\phi)}{l}&space;,&space;\beta&space;=&space;-&space;\frac{sen(\theta_t&space;-&space;\theta)}{l_t}" title="\\ g_1 = \begin{pmatrix} 0 \\ 0 \\ 0 \\ 1 \\ 0 \end{pmatrix} \hspace{0.5cm} g_2 = \begin{pmatrix} cos(\theta) \\ sen(\theta) \\ \alpha \\ 0 \\ \beta \end{pmatrix} \hspace{1cm} \alpha = \frac{tg(\phi)}{l} , \beta = - \frac{sen(\theta_t - \theta)}{l_t}" /></a>
+
+## Problem 2
+
+A similar exercise can be found <a href='https://github.com/theroggio/Autonomous-and-Mobile-Robotics-La-Sapienza-/blob/master/Chapter%2011.md#problem-1115'> here </a> where it uses a bicycle instead of a car-like vehicle. It's easy to see that the solution is the same, being the car-like model the same of the bicycle. 
  
+# Class Test 2009/2010 B
+
+## Problem 1
+
+Firs of all we need to indeitify a set of control points on the robot. It cannot change its orientation so we can easily use just one control point on one corner. 
+
+Here one of the possible solution for the C-obstacles shapes (using a different control point results in a different shape).
+
+<img src='https://github.com/theroggio/Autonomous-and-Mobile-Robotics-La-Sapienza-/blob/master/images/c-obstacles.jpg' />
+
+TODO
+
+## Problem 2
+
+TODO
