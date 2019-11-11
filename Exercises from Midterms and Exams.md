@@ -479,8 +479,9 @@ Now let's see the observation: the relative distance to the becon's location, wh
 
 The presence of sen and cos, the square root = the observation model is non linear. We need to linearize, using the chain form of the derivatives it's easier. 
 
-TO-FINISH
+<img src="https://latex.codecogs.com/gif.latex?\small&space;\\&space;H_{k&plus;1}&space;=&space;\frac{\partial&space;h_k}{\partial&space;p_e}&space;\frac{\partial&space;p_e}{\partial&space;q_{k&plus;1|k}}&space;\\&space;\frac{\partial&space;h_k}{\partial&space;p_e}&space;=&space;\frac{1}{\sqrt{(x_{e,k&plus;1|k}&space;-&space;x_b)^2&space;&plus;&space;(y_{e,k&plus;1|k}&space;-&space;y_b)^2&space;}}&space;\begin{pmatrix}&space;x_{e,k&plus;1|k}&space;-&space;x_b&space;&&space;y_{e,k&plus;1|k}-y_b&space;\end{pmatrix}&space;\\&space;\frac{\partial&space;p_e}{\partial&space;q_{k&plus;1|k}}&space;=&space;\begin{pmatrix}&space;1&space;&&space;0&space;&&space;-d&space;sen(\theta_{k&plus;1|k})&space;-l_1&space;sen(\theta_{k&plus;1|k}&space;&plus;&space;q_{1,k&plus;1|k})&space;-&space;l_2&space;sen(\theta_{k&plus;1|k}&space;&plus;&space;q_{1,k&plus;1|k}&space;&plus;&space;q_{2,k&plus;1|k})&space;&&space;-l_1&space;sen(\theta_{k&plus;1|k}&space;&plus;&space;q_{1,k&plus;1|k})&space;-&space;l_2&space;sen(\theta_{k&plus;1|k}&space;&plus;&space;q_{1,k&plus;1|k}&space;&plus;&space;q_{2,k&plus;1|k})&space;&&space;-&space;l_2&space;sen(\theta_{k&plus;1|k}&space;&plus;&space;q_{1,k&plus;1|k}&space;&plus;&space;q_{2,k&plus;1|k})&space;\\&space;0&space;&&space;1&space;&&space;d&space;cos(\theta_{k&plus;1|k})&space;&plus;&space;l_1&space;cos(\theta_{k&plus;1|k}&space;&plus;&space;q_{1,k&plus;1|k})&space;&plus;&space;l_2&space;cos(\theta_{k&plus;1|k}&space;&plus;&space;q_{1,k&plus;1|k}&space;&plus;&space;q_{2,k&plus;1|k})&space;&&space;l_1&space;cos(\theta_{k&plus;1|k}&space;&plus;&space;q_{1,k&plus;1|k})&space;&plus;&space;l_2&space;cos(\theta_{k&plus;1|k}&space;&plus;&space;q_{1,k&plus;1|k}&space;&plus;&space;q_{2,k&plus;1|k})&space;&&space;l_2&space;cos(\theta_{k&plus;1|k}&space;&plus;&space;q_{1,k&plus;1|k}&space;&plus;&space;q_{2,k&plus;1|k})&space;\end{pmatrix}" title="\small \\ H_{k+1} = \frac{\partial h_k}{\partial p_e} \frac{\partial p_e}{\partial q_{k+1|k}} \\ \frac{\partial h_k}{\partial p_e} = \frac{1}{\sqrt{(x_{e,k+1|k} - x_b)^2 + (y_{e,k+1|k} - y_b)^2 }} \begin{pmatrix} x_{e,k+1|k} - x_b & y_{e,k+1|k}-y_b \end{pmatrix} \\ \frac{\partial p_e}{\partial q_{k+1|k}} = \begin{pmatrix} 1 & 0 & -d sen(\theta_{k+1|k}) -l_1 sen(\theta_{k+1|k} + q_{1,k+1|k}) - l_2 sen(\theta_{k+1|k} + q_{1,k+1|k} + q_{2,k+1|k}) & -l_1 sen(\theta_{k+1|k} + q_{1,k+1|k}) - l_2 sen(\theta_{k+1|k} + q_{1,k+1|k} + q_{2,k+1|k}) & - l_2 sen(\theta_{k+1|k} + q_{1,k+1|k} + q_{2,k+1|k}) \\ 0 & 1 & d cos(\theta_{k+1|k}) + l_1 cos(\theta_{k+1|k} + q_{1,k+1|k}) + l_2 cos(\theta_{k+1|k} + q_{1,k+1|k} + q_{2,k+1|k}) & l_1 cos(\theta_{k+1|k} + q_{1,k+1|k}) + l_2 cos(\theta_{k+1|k} + q_{1,k+1|k} + q_{2,k+1|k}) & l_2 cos(\theta_{k+1|k} + q_{1,k+1|k} + q_{2,k+1|k}) \end{pmatrix}" />
 
+From here we have always the same equations of the EKF. The block scheme is also the common one: we use the last estimation with the kinematic model and the wheel encoder readings in the prediction, then we use the result with the sensor readings for the correction. 
 
 
 # Class Test 2010/2011 A
@@ -542,7 +543,21 @@ TODO
 
 ## Problem 2
 
-TODO
+We already have the kinematic model, so we can build the time discrete model. The generalized coordinates are the same variables of the state because the two beacons have known positions. 
+
+<img src="https://latex.codecogs.com/gif.latex?\small&space;\left\{\begin{matrix}&space;x_{k&plus;1}&space;=&space;x_k&space;&plus;&space;v_k&space;T_s&space;cos(\psi_k)&space;&plus;&space;n_{1,k}&space;\\&space;y_{k&plus;1}&space;=&space;y_k&space;&plus;&space;v_k&space;T_s&space;sen(\psi_K)&space;&plus;&space;n_{2,k}&space;\\&space;\psi_{k&plus;1}&space;=&space;\psi_k&space;-&space;\frac{g&space;T_s&space;tan(\phi_k)}{&space;v_k}&space;&plus;&space;n_{3,k}&space;\\&space;\phi_{k&plus;1}&space;=&space;\phi_k&space;&plus;&space;u_{\phi,k}&space;T_s&space;&plus;&space;n_{4,k}&space;\end{matrix}\right." title="\small \left\{\begin{matrix} x_{k+1} = x_k + v_k T_s cos(\psi_k) + n_{1,k} \\ y_{k+1} = y_k + v_k T_s sen(\psi_K) + n_{2,k} \\ \psi_{k+1} = \psi_k - \frac{g T_s tan(\phi_k)}{ v_k} + n_{3,k} \\ \phi_{k+1} = \phi_k + u_{\phi,k} T_s + n_{4,k} \end{matrix}\right." />
+
+The observations are the two bearing angles wrt the two radio beacons. 
+
+<img src="https://latex.codecogs.com/gif.latex?\small&space;h_k&space;=&space;\begin{pmatrix}&space;Atan2(y_k&space;-&space;y_1,&space;x_k&space;-&space;x_1)&space;-&space;\psi_k&space;&plus;&space;w_{1,k}\\&space;Atan2(y_k&space;-&space;y_2,&space;x_k&space;-&space;x_2)&space;-&space;\psi_k&space;&plus;&space;w_{2,k}&space;\end{pmatrix}&space;\\" title="\small h_k = \begin{pmatrix} Atan2(y_k - y_1, x_k - x_1) - \psi_k + w_{1,k}\\ Atan2(y_k - y_2, x_k - x_2) - \psi_k + w_{2,k} \end{pmatrix} \\" />
+
+Both the kinematic and observation model are non linear.
+
+<img src="https://latex.codecogs.com/gif.latex?\small&space;F_k&space;=&space;\begin{pmatrix}&space;1&space;&&space;0&space;&&space;-&space;v_k&space;T_s&space;sen(\psi_k)&space;&&space;0&space;\\&space;0&space;&&space;1&space;&&space;v_k&space;T_s&space;cos(\psi_k)&space;&&space;0&space;\\&space;0&space;&&space;0&space;&&space;1&space;&&space;-\frac{g&space;T_s}{&space;v_k&space;cos^2(\phi_k)}&space;\\&space;0&space;&&space;0&space;&&space;0&space;&&space;1&space;\end{pmatrix}" title="\small F_k = \begin{pmatrix} 1 & 0 & - v_k T_s sen(\psi_k) & 0 \\ 0 & 1 & v_k T_s cos(\psi_k) & 0 \\ 0 & 0 & 1 & -\frac{g T_s}{ v_k cos^2(\phi_k)} \\ 0 & 0 & 0 & 1 \end{pmatrix}" />
+
+<img src="https://latex.codecogs.com/gif.latex?\small&space;\\&space;H_{k&plus;1}&space;=&space;\begin{pmatrix}&space;-\frac{y_k&space;-&space;y_1}{\delta_1(q_{k&plus;1|k})}&space;&&space;\frac{x_k&space;-&space;x_1}{\delta_1(q_{k&plus;1|k})}&space;&&space;-1&space;&&space;0&space;\\&space;-\frac{y_k&space;-&space;y_2}{\delta_2(q_{k&plus;1|k})}&space;&&space;\frac{x_k&space;-&space;x_2}{\delta_2(q_{k&plus;1|k})}&space;&&space;-1&space;&&space;0&space;\end{pmatrix}&space;\\&space;\\&space;\delta_1(q_k)&space;=&space;(x_k&space;-&space;x_1)^2&space;&plus;&space;(y_k&space;-&space;y_1)^2&space;\\&space;\delta_2(q_k)&space;=&space;(x_k&space;-&space;x_2)^2&space;&plus;&space;(y_k&space;-&space;y_2)^2" title="\small \\ H_{k+1} = \begin{pmatrix} -\frac{y_k - y_1}{\delta_1(q_{k+1|k})} & \frac{x_k - x_1}{\delta_1(q_{k+1|k})} & -1 & 0 \\ -\frac{y_k - y_2}{\delta_2(q_{k+1|k})} & \frac{x_k - x_2}{\delta_2(q_{k+1|k})} & -1 & 0 \end{pmatrix} \\ \\ \delta_1(q_k) = (x_k - x_1)^2 + (y_k - y_1)^2 \\ \delta_2(q_k) = (x_k - x_2)^2 + (y_k - y_2)^2" />
+
+And from here is the same story. 
 
 # Class Test 2009/2010 A
 
@@ -592,4 +607,6 @@ TODO
 
 ## Problem 2
 
-TODO
+Problem done on paper. Anyway the kinematic model has already been derived, and similar problem have been done previously. This has no other difficulties. 
+
+
